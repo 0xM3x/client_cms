@@ -1,16 +1,23 @@
-# Python
+# Python / Django
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
 *.sqlite3
+*.log
 .env
 .venv/
-# Django
-/staticfiles/
-media/
-# Node (we'll add Tailwind later)
+.env*/
+db.sqlite3
+
+# Django collectstatic
+staticfiles/
+
+# Node / Tailwind
 node_modules/
-# OS
+static/build/*
+!static/build/.keep
+
+# Editors/OS
+.idea/
+.vscode/
 .DS_Store
-Thumbs.db
+
