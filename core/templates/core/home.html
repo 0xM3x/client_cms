@@ -3,5 +3,15 @@
 {% block content %}
   <h1 class="text-2xl font-bold mb-2">It works 🎉</h1>
   <p class="text-neutral-300">Django + Tailwind base is up.</p>
+
+  <div class="mt-6 p-4 rounded-lg bg-zinc-900 border border-zinc-800">
+    <div class="text-sm text-zinc-400">Resolved tenant:</div>
+    <div class="mt-1">
+      <code class="text-emerald-300">
+        {{ request.tenant.slug|default:"-" }}
+      </code>
+      <span class="text-zinc-500 ml-2">(host: {{ request.get_host }})</span>
+    </div>
+  </div>
 {% endblock %}
 
