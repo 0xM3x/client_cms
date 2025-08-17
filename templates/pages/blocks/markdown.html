@@ -1,0 +1,9 @@
+{% load richtext %}
+{% with d=block.data %}
+<section class="py-6">
+  <div class="prose prose-invert max-w-3xl mx-auto">
+    {{ d.md|render_md }}
+  </div>
+</section>
+{% endwith %}
+

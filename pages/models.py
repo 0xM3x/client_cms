@@ -34,9 +34,13 @@ class Page(models.Model):
 class Block(models.Model):
     HERO = "hero"
     IMAGE = "image"
+    TEXT = "text"
+    MARKDOWN = "markdown"
     KIND_CHOICES = [
         (HERO, "Hero"),
         (IMAGE, "Image"),
+        (TEXT, "Text"),
+        (MARKDOWN, "Markdown"),
     ]
     page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name="blocks")
     kind = models.CharField(max_length=20, choices=KIND_CHOICES)
