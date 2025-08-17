@@ -1,7 +1,9 @@
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from .models import Page
 from django.views.decorators.csrf import requires_csrf_token
+from django.core import signing
+
 
 
 def _nav_pages(request):
@@ -73,3 +75,21 @@ def site_404(request, exception):
         "path": request.path,
     }
     return render(request, "pages/site_404.html", ctx, status=404)
+
+def page_preview(request, token: str):
+    """
+    Render a Page by signed token (valid 10 minutes) regardless of is_published.
+    Link is generated from Admin and meant for staff use.
+    """
+    try:
+        data = signing.loads(token, max_age=600, salt="pages.preview")  # 10 minutes
+        page_id = data["page_id"]
+    except signing.SignatureExpired:
+        return HttpResponseForbidden("Preview link expired.")
+    except signing.BadSignature:
+        raise Http404("Invalid preview token.")
+
+    page = get_object_or_404(Page.objects.prefetch_related("blocks"), pk=page_id)
+    # Ensure templates show the correct tenant brand/nav even if host didn’t resolve
+    setattr(request, "tenant", page.tenant)
+    return _render_page(request, page)

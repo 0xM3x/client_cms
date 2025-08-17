@@ -1,6 +1,9 @@
 from django.contrib import admin, messages
 from django.utils import timezone
 from django.db import models
+from django.urls import path, reverse
+from django.shortcuts import redirect
+from django.core import signing
 
 from .models import Page, Block
 
@@ -37,6 +40,7 @@ class PageAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     inlines = [BlockInline]
     readonly_fields = ("created_at", "updated_at", "published_at")
+    change_form_template = "admin/pages/page/change_form.html"
     fieldsets = (
         (None, {
             "fields": (
@@ -91,3 +95,19 @@ class PageAdmin(admin.ModelAdmin):
 
     make_home_page.short_description = "Make selected page(s) the Home for its tenant"
 
+    def get_urls(self):
+        urls = super().get_urls()
+        custom = [
+            path(
+                "<path:object_id>/preview/",
+                self.admin_site.admin_view(self.preview_view),
+                name="pages_page_preview",
+            ),
+        ]
+        return custom + urls
+    
+    def preview_view(self, request, object_id):
+        page = self.get_object(request, object_id)
+        token = signing.dumps({"page_id": page.pk}, salt="pages.preview")
+        url = request.build_absolute_uri(reverse("page_preview", args=[token]))
+        return redirect(url)

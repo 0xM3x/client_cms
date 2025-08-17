@@ -9,6 +9,9 @@ urlpatterns = [
     # Public tenant site
     path("", page_views.home_router, name="public_home"),
     path("<slug:slug>/", page_views.page_detail, name="page_detail"),
+
+    # --- Preview: time-limited signed link ---
+    path("__preview/<str:token>/", page_views.page_preview, name="page_preview"),
 ]
 
 # Custom 404 (works when DEBUG=False)

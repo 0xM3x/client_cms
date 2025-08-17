@@ -1,0 +1,15 @@
+{% extends "admin/change_form.html" %}
+{% load admin_urls %}
+
+{% block object-tools-items %}
+  {{ block.super }}
+  {% if original.pk %}
+    <li>
+      <a href="{% url 'admin:pages_page_preview' original.pk %}"
+         class="viewsitelink" target="_blank" rel="noopener">
+        Preview (10 min)
+      </a>
+    </li>
+  {% endif %}
+{% endblock %}
+
