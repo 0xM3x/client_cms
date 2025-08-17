@@ -1,0 +1,14 @@
+{% with d=block.data %}
+<section class="py-2">
+  <figure class="{% if d.width == 'full' %}-mx-4 md:-mx-6{% else %}max-w-3xl{% endif %} mx-auto">
+    {% if d.src %}
+      <img src="{{ d.src }}" alt="{{ d.alt|default:'' }}"
+           class="w-full h-auto {% if d.rounded %}rounded-2xl{% endif %} shadow-sm" />
+    {% endif %}
+    {% if d.caption %}
+      <figcaption class="mt-2 text-sm text-neutral-400">{{ d.caption }}</figcaption>
+    {% endif %}
+  </figure>
+</section>
+{% endwith %}
+
