@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "tailwindcss";
+/* Tell Tailwind where to look for class names */
+@source "../../templates/**/*.html";
+/* If you’ll put templates in app folders later, this catches them too */
+@source "../../**/*.html";

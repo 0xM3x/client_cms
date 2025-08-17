@@ -1,0 +1,27 @@
+{
+  "name": "client_cms",
+  "version": "1.0.0",
+  "description": "Simple, multi-tenant, server-rendered CMS with Tailwind.",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./static/src/tw.css -o ./static/build/app.css --minify",
+    "watch:css": "tailwindcss -i ./static/src/tw.css -o ./static/build/app.css --watch",
+
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xM3x/client_cms.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0xM3x/client_cms/issues"
+  },
+  "homepage": "https://github.com/0xM3x/client_cms#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.12",
+    "tailwindcss": "^4.1.12"
+  }
+}
