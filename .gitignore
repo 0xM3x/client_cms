@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+.env
+.venv/
+# Django
+/staticfiles/
+media/
+# Node (we'll add Tailwind later)
+node_modules/
+# OS
+.DS_Store
+Thumbs.db
