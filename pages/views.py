@@ -1,6 +1,8 @@
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Page
+from django.views.decorators.csrf import requires_csrf_token
+
 
 def _nav_pages(request):
     tenant = getattr(request, "tenant", None)
@@ -62,3 +64,12 @@ def page_detail(request, slug: str):
     )
     return _render_page(request, page)
 
+@requires_csrf_token
+def site_404(request, exception):
+    tenant = getattr(request, "tenant", None)
+    ctx = {
+        "nav_pages": _nav_pages(request),
+        "tenant": tenant,
+        "path": request.path,
+    }
+    return render(request, "pages/site_404.html", ctx, status=404)

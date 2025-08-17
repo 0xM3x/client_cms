@@ -11,3 +11,5 @@ urlpatterns = [
     path("<slug:slug>/", page_views.page_detail, name="page_detail"),
 ]
 
+# Custom 404 (works when DEBUG=False)
+handler404 = "pages.views.site_404"

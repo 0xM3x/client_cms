@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Not found — {{ tenant.name|default:"Client CMS" }}{% endblock %}
+
+{% block content %}
+  <header class="border-b border-neutral-800">
+    <div class="max-w-5xl mx-auto p-4 flex items-center justify-between gap-4">
+      <a href="/" class="font-semibold tracking-tight hover:opacity-90">
+        {{ tenant.name|default:"Client" }}
+      </a>
+      {% if nav_pages %}
+      <nav class="text-sm">
+        <ul class="flex gap-4">
+          {% for p in nav_pages %}
+            <li>
+              <a class="hover:underline" href="{% if p.is_home %}/{% else %}{% url 'page_detail' slug=p.slug %}{% endif %}">
+                {{ p.nav_label|default:p.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 md:px-6 py-16">
+    <h1 class="text-3xl font-semibold mb-2">Page not found</h1>
+    <p class="text-neutral-300">We couldn’t find <code class="text-neutral-100">{{ path }}</code> for this tenant.</p>
+    <p class="mt-6">
+      <a href="/" class="inline-flex items-center rounded-xl bg-neutral-100 text-neutral-900 px-4 py-2 font-medium hover:bg-white/90">
+        Go home
+      </a>
+    </p>
+  </main>
+{% endblock %}
+
