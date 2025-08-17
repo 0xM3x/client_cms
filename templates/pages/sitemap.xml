@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home -->
+  <url>
+    <loc>{{ base }}/</loc>
+    {% if home_updated %}<lastmod>{{ home_updated|date:"c" }}</lastmod>{% endif %}
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Published pages -->
+  {% for p in pages %}
+    {% if not p.is_home %}
+    <url>
+      <loc>{{ base }}{% url 'page_detail' slug=p.slug %}</loc>
+      <lastmod>{{ p.updated_at|date:"c" }}</lastmod>
+      <priority>0.7</priority>
+    </url>
+    {% endif %}
+  {% endfor %}
+</urlset>
+

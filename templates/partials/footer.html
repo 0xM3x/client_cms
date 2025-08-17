@@ -1,0 +1,9 @@
+<footer class="border-t border-neutral-800 mt-16">
+  <div class="max-w-5xl mx-auto px-4 md:px-6 py-8 text-sm text-neutral-400 flex items-center justify-between">
+    <p>© {% now "Y" %} {{ request.tenant.name|default:"Client CMS" }}.</p>
+    <nav class="flex items-center gap-4">
+      <a href="/sitemap.xml" class="hover:underline">Sitemap</a>
+    </nav>
+  </div>
+</footer>
+

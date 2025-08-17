@@ -12,6 +12,9 @@ urlpatterns = [
 
     # --- Preview: time-limited signed link ---
     path("__preview/<str:token>/", page_views.page_preview, name="page_preview"),
+
+    # Tenant sitemap
+    path("sitemap.xml", page_views.tenant_sitemap, name="tenant_sitemap"),
 ]
 
 # Custom 404 (works when DEBUG=False)

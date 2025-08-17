@@ -3,6 +3,8 @@ from django.shortcuts import render, get_object_or_404
 from .models import Page
 from django.views.decorators.csrf import requires_csrf_token
 from django.core import signing
+from django.utils import timezone
+
 
 
 
@@ -93,3 +95,23 @@ def page_preview(request, token: str):
     # Ensure templates show the correct tenant brand/nav even if host didn’t resolve
     setattr(request, "tenant", page.tenant)
     return _render_page(request, page)
+
+def tenant_sitemap(request):
+    tenant = getattr(request, "tenant", None)
+    if not tenant:
+        raise Http404("Tenant not resolved")
+
+    pages_qs = (
+        Page.objects.filter(tenant=tenant, is_published=True)
+        .only("slug", "is_home", "updated_at")
+        .order_by("nav_order", "title")
+    )
+    home = pages_qs.filter(is_home=True).first()
+    base = f"{request.scheme}://{request.get_host()}"
+
+    ctx = {
+        "base": base,
+        "pages": pages_qs,
+        "home_updated": getattr(home, "updated_at", None),
+    }
+    return render(request, "pages/sitemap.xml", ctx, content_type="application/xml")
